@@ -1,0 +1,34 @@
+diff --git a/lib/client-handshake.c b/lib/client-handshake.c
+index 40916d6..f297ca2 100644
+--- a/lib/client-handshake.c
++++ b/lib/client-handshake.c
+@@ -96,17 +96,18 @@ struct libwebsocket *libwebsocket_client_connect_2(
+ 	} else
+ #endif
+ 	{
+-		struct addrinfo ai, *res;
++		struct addrinfo ai, *res, *res0;
+ 		void *p = NULL;
+ 
+-		memset (&ai, 0, sizeof ai);
++		memset(&ai, 0, sizeof(struct addrinfo));
+ 		ai.ai_family = PF_UNSPEC;
+ 		ai.ai_socktype = SOCK_STREAM;
+ 		ai.ai_flags = AI_CANONNAME;
+ 
+-		if (getaddrinfo(ads, NULL, &ai, &res))
++		if (getaddrinfo(ads, NULL, &ai, &res0))
+ 			goto oom4;
+ 
++		res = res0;
+ 		while (!p && res) {
+ 			switch (res->ai_family) {
+ 			case AF_INET:
+@@ -123,6 +124,7 @@ struct libwebsocket *libwebsocket_client_connect_2(
+ 		server_addr4.sin_family = AF_INET;
+ 		server_addr4.sin_addr = *((struct in_addr *)p);
+ 		bzero(&server_addr4.sin_zero, 8);
++		freeaddrinfo(res0);
+ 	}
+ 
+ 	if (wsi->sock < 0) {

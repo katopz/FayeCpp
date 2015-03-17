@@ -1,5 +1,5 @@
 diff --git a/lib/client-handshake.c b/lib/client-handshake.c
-index 40916d6..f297ca2 100644
+index 40916d6..36e572f 100644
 --- a/lib/client-handshake.c
 +++ b/lib/client-handshake.c
 @@ -96,17 +96,18 @@ struct libwebsocket *libwebsocket_client_connect_2(
@@ -24,7 +24,15 @@ index 40916d6..f297ca2 100644
  		while (!p && res) {
  			switch (res->ai_family) {
  			case AF_INET:
-@@ -123,6 +124,7 @@ struct libwebsocket *libwebsocket_client_connect_2(
+@@ -118,11 +119,15 @@ struct libwebsocket *libwebsocket_client_connect_2(
+ 		}
+ 		
+ 		if (!p)
++		{
++			freeaddrinfo(res0);
+ 			goto oom4;
++		}
+ 
  		server_addr4.sin_family = AF_INET;
  		server_addr4.sin_addr = *((struct in_addr *)p);
  		bzero(&server_addr4.sin_zero, 8);

@@ -250,7 +250,7 @@ namespace FayeCpp {
 		{
 			if (i.key().isEqual(_bayeuxChannelKey))
 			{
-				REString channel = i.value().toString();
+				REString channel(i.value().toString());
 
 				if (channel.isEqual(_bayeuxHandshakeChannel))
 				{
@@ -497,18 +497,36 @@ namespace FayeCpp {
 		REVariantMap::Iterator i = message.iterator();
 		while (i.next()) 
 		{
-			if (i.key().isEqual(_bayeuxClientIdKey) && i.value().isString())
+			switch (i.value().type())
 			{
-				_clientId = i.value().toString();
-			}
-			else if (i.key().isEqual(_bayeuxSupportedConnectionTypesKey) && i.value().isList())
-			{
-				REVariantList::Iterator j = i.value().toList().iterator();
-				while (j.next()) _supportedConnectionTypes.add(j.value().toString());
-			}
-			else if (i.key().isEqual(_bayeuxErrorKey) && i.value().isString())
-			{
-				errorString = i.value().toString();
+				case REVariant::TypeString:
+					if (i.key().isEqual(_bayeuxClientIdKey))
+					{
+						_clientId = i.value().toString();
+					}
+					else if (i.key().isEqual(_bayeuxErrorKey))
+					{
+						errorString = i.value().toString();
+					}
+					break;
+
+				case REVariant::TypeMap:
+					if (i.key().isEqual(_bayeuxAdviceKey))
+					{
+						if (_transport) _transport->receivedAdvice(i.value().toMap());
+					}
+					break;
+
+				case REVariant::TypeList:
+					if (i.key().isEqual(_bayeuxSupportedConnectionTypesKey))
+					{
+						REVariantList::Iterator j = i.value().toList().iterator();
+						while (j.next()) _supportedConnectionTypes.add(j.value().toString());
+					}
+					break;
+
+				default:
+					break;
 			}
 		}
 

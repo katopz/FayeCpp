@@ -738,7 +738,7 @@ namespace FayeCpp {
 
 
 		/**
-		 @brief Define node creator callback function with defaul value.
+		 @brief Define node creator callback function with default value.
 		 @param newValue Const address to new node value.
 		 */
 		typedef NodePtr (*CreateNodeCallback)(const T & newValue);
@@ -2250,14 +2250,14 @@ namespace FayeCpp {
 		
 
 		/**
-		  @brief Conserts string to it's lower presentation.
+		  @brief Converts string to it's lower presentation.
 		  @return Address of this string object.
 		 */
 		REMutableString & toLower();
 		
 
 		/**
-		 @brief Conserts string to it's upper presentation.
+		 @brief Converts string to it's upper presentation.
 		 @return Address of this string object.
 		*/
 		REMutableString & toUpper();
@@ -2568,7 +2568,7 @@ namespace FayeCpp {
 		
 		/**
 		 @brief Get client private key passphrase. Needs for encrypted client file key.
-		 @detailed If client key is encrypted(have '-----BEGIN ENCRYPTED PRIVATE KEY-----'),
+		 @detailed If client key is encrypted(key file have '-----BEGIN ENCRYPTED PRIVATE KEY-----'),
 		 you should return pass for this key.
 		 @return Pass phrase string or empty string.
 		 */
@@ -3512,6 +3512,7 @@ namespace FayeCpp {
 		
 		/**
 		 @brief Setter for client delegate.
+		 @param delegate Pointer to faye client delegate.
 		 */
 		void setDelegate(Delegate * delegate);
 		
@@ -3525,12 +3526,13 @@ namespace FayeCpp {
 		
 		/**
 		 @brief Setter for client SSL data source.
+		 @param dataSource Pointer to faye client SSL data source.
 		 */
 		void setSSLDataSource(SSLDataSource * dataSource);
 		
 		
 		/**
-		 @brief Getter for faye client id. Returned from the server on handshe step.
+		 @brief Getter for faye client id. Returned from the server on handshake step.
 		 */
 		const REString & clientId() const;
 		
@@ -3550,7 +3552,7 @@ namespace FayeCpp {
 		
 		
 		/**
-		 @brief Returns string with URL host.
+		 @brief Returns string with host URL.
 		 */
 		const REString & host() const;
 		
@@ -3574,8 +3576,8 @@ namespace FayeCpp {
 		
 		
 		/**
-		 @brief Start connection sequence. On the first step connecting transport protocol to server(inform delegate).
-		 @brief Next - connecting faye(also, inform delegate).
+		 @brief Start connection sequence. On the first step transport protocol starts connecting to server(inform delegate).
+		 @detailed Next - connecting faye(also, inform delegate).
 		 @return True if sequence initialized, otherwice false.
 		 */
 		bool connect();
@@ -3596,7 +3598,7 @@ namespace FayeCpp {
 		
 		
 		/**
-		 @brief Disconnects from faye server. Transport protocol could be still opened/connected.
+		 @brief Disconnects from faye server. Transport protocol could be still connected/opened.
 		 */
 		void disconnect();
 		

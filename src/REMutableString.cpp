@@ -71,7 +71,6 @@ namespace FayeCpp {
 		return (*this);
 	}
 	
-	/// Conserts string ti it's lower presentation.
 	REMutableString & REMutableString::toLower()
 	{
 		if (_p.isNotEmpty())
@@ -104,7 +103,6 @@ namespace FayeCpp {
 		return (*this);
 	}
 	
-	/// Conserts string ti it's uper presentation.
 	REMutableString & REMutableString::toUpper()
 	{
 		if (_p.isNotEmpty())
@@ -137,8 +135,7 @@ namespace FayeCpp {
 		return (*this);
 	}
 	
-	/// Appends another UTF8 string.
-	REMutableString & REMutableString::append(const char * utf8String, 
+	REMutableString & REMutableString::append(const char * utf8String,
 											  const REUInt32 utf8StringLength)
 	{
 		const REUInt32 len = REStringUtilsPrivate::actualUTF8StringLength(utf8String, utf8StringLength);
@@ -167,7 +164,6 @@ namespace FayeCpp {
 		return (*this);
 	}
 	
-	/// Appends another wide char string.
 	REMutableString & REMutableString::append(const wchar_t * wideString, 
 											  const REUInt32 wideStringLength)
 	{

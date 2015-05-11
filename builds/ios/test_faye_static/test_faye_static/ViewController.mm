@@ -33,8 +33,7 @@ public:
 
 		FayeCpp::RELog::log("Try reconnect.");
 		client->connect();
-		client->subscribeToChannel("/seminars/5322e93d8ee60a422400008f");
-		client->subscribeToChannel("/seminars_service/5322e93d8ee60a422400008f");
+		client->subscribeToChannel("/messages");
 		FayeCpp::RELog::log("Done reconnect.");
 	}
 
@@ -141,7 +140,7 @@ using namespace FayeCpp;
 		dict[@"int1"] = @123;
 		dict[@"float1"] = @3.14;
 
-		[_client sendMessage:dict toChannel:@"/seminars/5322e93d8ee60a422400008f"];
+		[_client sendMessage:dict toChannel:@"/messages"];
 	}
 #else
 	if (_client)
@@ -152,7 +151,7 @@ using namespace FayeCpp;
 
 		message["text"] = [[_textField text] UTF8String];
 
-		_client->sendMessageToChannel(message, "/seminars/5322e93d8ee60a422400008f");
+		_client->sendMessageToChannel(message, "/messages");
 	}
 #endif
 	NSLog(@"Done");
@@ -174,7 +173,7 @@ using namespace FayeCpp;
 	client = [[FayeCppClient alloc] init];
 	[client setDelegate:self];
 	[client setSSLDataSource:self];
-	[client setUrlString:@"http://messages.presentain.com:80/faye"];
+	[client setUrlString:@"http://localhost:8000/faye"];
 	self.client = client;
 
 	NSMutableDictionary * ext = [NSMutableDictionary dictionary];
@@ -223,8 +222,7 @@ using namespace FayeCpp;
 	v = _client->extValue();
 
 	_client->setUsingIPV6(false);
-	_client->setUrl("http://messages.presentain.com:80/faye");
-	//_client->setUrl("https://localhost:6001/faye");
+	_client->setUrl("http://localhost:8000/faye");
 	_client->setDelegate(_delegate);
 	//	_client->setSSLDataSource(new FayeSSLDataSource());
 #endif
@@ -235,12 +233,10 @@ using namespace FayeCpp;
 {
 #if defined(OBJC_CLIENT)
 	[_client connect];
-	[_client subscribeToChannel:@"/seminars/5322e93d8ee60a422400008f"];
-	[_client subscribeToChannel:@"/seminars_service/5322e93d8ee60a422400008f"];
+	[_client subscribeToChannel:@"/messages"];
 #else
 	_client->connect();
-	_client->subscribeToChannel("/seminars/5322e93d8ee60a422400008f");
-	_client->subscribeToChannel("/seminars_service/5322e93d8ee60a422400008f");
+	_client->subscribeToChannel("/messages");
 #endif
 	NSLog(@"Done");
 }
